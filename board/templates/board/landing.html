@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Status</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .status {
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            opacity: 0.3;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #0f0;
+            border-radius: 50%;
+            margin: 0 auto;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+
+        .dot:hover {
+            opacity: 1;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #000;
+            border: 1px solid #0f0;
+            padding: 30px;
+            max-width: 300px;
+            width: 90%;
+        }
+
+        .modal-title {
+            font-size: 11px;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+
+        input {
+            width: 100%;
+            background: #000;
+            border: none;
+            border-bottom: 1px solid #0f0;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            padding: 10px 0;
+            outline: none;
+            letter-spacing: 3px;
+        }
+
+        input::placeholder {
+            color: #0f0;
+            opacity: 0.3;
+        }
+
+        .error {
+            color: #f00;
+            font-size: 10px;
+            margin-top: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .error.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="status">SYSTEM STATUS: OK</div>
+        <div class="dot" id="accessBtn"></div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-title">ACCESS CODE</div>
+            <form id="codeForm">
+                {% csrf_token %}
+                <input type="text" id="codeInput" name="code" placeholder="enter code" minlength="4" autocomplete="off"
+                    autofocus>
+                <div class="error" id="error">INVALID</div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const accessBtn = document.getElementById('accessBtn');
+        const modal = document.getElementById('modal');
+        const codeForm = document.getElementById('codeForm');
+        const codeInput = document.getElementById('codeInput');
+        const error = document.getElementById('error');
+
+        // Open modal
+        accessBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+            codeInput.focus();
+        });
+
+        // Close modal on outside click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                codeInput.value = '';
+                error.classList.remove('show');
+            }
+        });
+
+        // Handle form submission
+        codeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(codeForm);
+
+            try {
+                const response = await fetch('/validate/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    window.location.href = '/board/';
+                } else {
+                    error.classList.add('show');
+                    codeInput.value = '';
+                    setTimeout(() => {
+                        error.classList.remove('show');
+                    }, 2000);
+                }
+            } catch (err) {
+                console.error('Error:', err);
+            }
+        });
+
+        // Submit on Enter key
+        codeInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                codeForm.dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+</body>
+
+</html>
