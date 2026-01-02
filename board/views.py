@@ -10,7 +10,7 @@ load_dotenv()
 
 
 def landing(request):
-    """Black landing page with minimal UI"""
+    """Geospatial monitoring landing page"""
     return render(request, 'board/landing.html')
 
 
@@ -30,7 +30,7 @@ def validate_code(request):
 
 
 def board(request):
-    """Main message board - shows only messages from current room"""
+    """Main message board - shows ALL messages from current room (messages stay forever)"""
     if not request.session.get('authenticated'):
         return redirect('landing')
     
@@ -47,17 +47,12 @@ def board(request):
             )
             return redirect('board')
     
-    # Get today's messages for THIS ROOM ONLY
-    today = timezone.now().date()
-    messages = Message.objects.filter(
-        room_code=room_code,
-        created_at__date=today
-    )
+    # Get ALL messages for THIS ROOM (messages persist forever, not just today)
+    messages = Message.objects.filter(room_code=room_code)
     
     context = {
         'messages': messages,
-        'today': today,
-        'room_code': room_code,  # Pass room code to template
+        'room_code': room_code,
     }
     return render(request, 'board/board.html', context)
 
@@ -66,4 +61,3 @@ def logout_view(request):
     """Clear session and redirect to landing"""
     request.session.flush()
     return redirect('landing')
-
