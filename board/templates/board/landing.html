@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geospatial Technology - UPSC Notes</title>
-    <meta name="description"
-        content="Comprehensive notes on Geospatial Technology for UPSC preparation covering GIS, Remote Sensing, GPS and applications">
+    <meta name="description" content="Comprehensive notes on Geospatial Technology for UPSC preparation">
     <style>
         * {
             margin: 0;
@@ -15,7 +14,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.7;
             color: #333;
             background: #f8f9fa;
@@ -48,11 +47,9 @@
 
         .container {
             max-width: 900px;
-            margin: 0 auto;
+            margin: 20px auto 40px;
             background: white;
             padding: 30px;
-            margin-top: 20px;
-            margin-bottom: 40px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
@@ -61,7 +58,6 @@
             font-weight: 700;
             color: #1a1a2e;
             margin-bottom: 15px;
-            line-height: 1.3;
         }
 
         .article-meta {
@@ -83,16 +79,14 @@
         h2 {
             font-size: 24px;
             color: #1a1a2e;
-            margin-top: 35px;
-            margin-bottom: 15px;
+            margin: 35px 0 15px;
             font-weight: 600;
         }
 
         h3 {
             font-size: 19px;
             color: #2c3e50;
-            margin-top: 25px;
-            margin-bottom: 12px;
+            margin: 25px 0 12px;
             font-weight: 600;
         }
 
@@ -113,34 +107,6 @@
             font-size: 15px;
         }
 
-        .table-container {
-            overflow-x: auto;
-            margin: 25px 0;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-
-        th {
-            background: #1a1a2e;
-            color: white;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        td {
-            padding: 12px;
-            border: 1px solid #ddd;
-        }
-
-        tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-
         .highlight-box {
             background: #fff3cd;
             border-left: 4px solid #ffc107;
@@ -148,14 +114,6 @@
             margin: 20px 0;
         }
 
-        .info-box {
-            background: #e7f3ff;
-            border-left: 4px solid #0066cc;
-            padding: 15px;
-            margin: 20px 0;
-        }
-
-        /* Hidden access button - disguised as a reference link */
         .ref-link {
             color: #0066cc;
             text-decoration: none;
@@ -167,16 +125,7 @@
             color: #004499;
         }
 
-        .footer {
-            background: #1a1a2e;
-            color: white;
-            padding: 30px 20px;
-            text-align: center;
-            font-size: 13px;
-            margin-top: 40px;
-        }
-
-        /* Modal */
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -184,7 +133,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             align-items: center;
             justify-content: center;
             z-index: 1000;
@@ -197,43 +146,191 @@
         .modal-content {
             background: white;
             padding: 30px;
-            max-width: 400px;
+            max-width: 500px;
             width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
             border-radius: 8px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .modal-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
             margin-bottom: 20px;
             color: #1a1a2e;
         }
 
-        input {
+        .room-list {
+            margin: 20px 0;
+        }
+
+        .room-item {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .room-item:hover {
+            background: #f8f9fa;
+            border-color: #0066cc;
+        }
+
+        .room-info h4 {
+            font-size: 16px;
+            color: #1a1a2e;
+            margin-bottom: 5px;
+        }
+
+        .room-info p {
+            font-size: 13px;
+            color: #666;
+            margin: 0;
+        }
+
+        .unread-badge {
+            background: #dc3545;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .unread-badge.zero {
+            background: #28a745;
+        }
+
+        .create-room-btn {
+            width: 100%;
+            padding: 15px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .create-room-btn:hover {
+            background: #0052a3;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="password"] {
             width: 100%;
             padding: 12px;
             border: 2px solid #ddd;
             border-radius: 4px;
             font-size: 15px;
             outline: none;
-            transition: border-color 0.3s;
         }
 
         input:focus {
             border-color: #0066cc;
         }
 
-        .error {
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            background: #0052a3;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 12px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .error-msg {
             color: #dc3545;
             font-size: 13px;
             margin-top: 10px;
-            opacity: 0;
-            transition: opacity 0.3s;
+            display: none;
         }
 
-        .error.show {
-            opacity: 1;
+        .error-msg.show {
+            display: block;
+        }
+
+        .success-msg {
+            color: #28a745;
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .success-msg.show {
+            display: block;
+        }
+
+        .back-btn {
+            color: #0066cc;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+
+        .footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 13px;
+            margin-top: 40px;
         }
     </style>
 </head>
@@ -252,222 +349,203 @@
         <h1 class="article-title">Geospatial Technology</h1>
 
         <div class="article-meta">
-            By UPSC Editorial Team | Last Updated: January 2, 2026 | Reading Time: 12 min
+            By UPSC Editorial Team | Last Updated: January 5, 2026 | Reading Time: 12 min
         </div>
 
         <div class="article-intro">
             <strong>Overview:</strong> Geospatial technology collects, processes, and illustrates Earth's spatial data.
             This comprehensive guide covers types, applications, government initiatives, and challenges of Geospatial
-            Technology in India - essential for UPSC Mains GS Paper 3.
+            Technology in India.
         </div>
 
         <h2>Understanding Geospatial Technology</h2>
-        <p>Geospatial Technology refers to the equipment, software, and methods used to acquire, process, and analyse
-            data that has a geographic or spatial component. This means that the data is associated with a specific
-            location on the Earth's surface.</p>
-
-        <p>It is fundamental to fields such as cartography, remote sensing, and Geographic Information Systems (GIS).
-            Geospatial technology offers a critical understanding of spatial configurations, interconnections, and
-            events.</p>
-
-        <h2>Types of Geospatial Technology</h2>
-        <p>Among the prevalent geospatial technologies are:</p>
-
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Technology</th>
-                        <th>Explanation</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Remote Sensing</strong></td>
-                        <td>
-                            • Observes distant objects using images from space or airborne instruments<br>
-                            • Techniques include aerial photographs, electromagnetic waves, Radar and LiDAR<br>
-                            • Example: Monitoring deforestation using satellite imagery
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Geographic Information Systems (GIS)</strong></td>
-                        <td>
-                            • System to collect, organize, visualize geographic data<br>
-                            • Applications in conservation, disaster response, urban planning<br>
-                            • Example: Urban planning and sustainable development
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Global Positioning System (GPS)</strong></td>
-                        <td>
-                            • Satellite-based navigation providing location, speed, time data<br>
-                            • Operates on principle of Trilateration<br>
-                            • Example: Real-time route optimization for traffic control
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <p>Geospatial Technology refers to equipment, software, and methods used to acquire, process, and analyse data
+            with a geographic component associated with specific Earth locations.</p>
 
         <h2>Applications of Geospatial Technology</h2>
-        <p>The range of applications for geospatial data is extensive. Some standard instances include:</p>
-
         <ul>
-            <li><strong>Climate Change and Disaster Management:</strong> Improves situational awareness and
-                decision-making for natural disasters</li>
-            <li><strong>Earth Observation:</strong> Monitors plant growth, water quality, temperatures, ocean salt
-                levels</li>
-            <li><strong>Healthcare:</strong> Tracks virus spread, identifies high-risk areas, supports migrant
-                populations</li>
-            <li><strong>Land and Forest Management:</strong> Village surveys, mapping, accurate rural land records</li>
+            <li><strong>Climate Change and Disaster Management:</strong> Improves situational awareness for natural
+                disasters</li>
+            <li><strong>Healthcare:</strong> Tracks virus spread and identifies high-risk areas</li>
             <li><strong>Agriculture:</strong> Assesses vegetation health in specific areas</li>
-            <li><strong>Transport:</strong> Location tracking, arrival time prediction, route navigation</li>
+            <li><strong>Transport:</strong> Location tracking and route navigation</li>
         </ul>
-
-        <h2>Geospatial Technology in India</h2>
-        <p>With its wide geographical expanse, Geospatial technology is key to India's development:</p>
-
-        <div class="info-box">
-            <strong>Key Statistics:</strong> As per the India Geospatial Artha Report 2021, the geospatial market in
-            India stands at Rs 38,972 crore, employing around 4.7 lakh individuals. The sector is projected to expand to
-            Rs 63,100 crore by 2025.
-        </div>
-
-        <p>Institutions like the Survey of India (SoI), ISRO, Remote Sensing Application Centers (RSACs), and the
-            National Informatics Centre (NIC) have played pivotal roles in advancing geospatial technology.</p>
 
         <h2>National Geospatial Policy, 2022</h2>
-        <p>The Government of India introduced a National Geospatial policy with two main goals:</p>
-
-        <ol>
-            <li>Develop a coherent national framework</li>
-            <li>Enable easy availability of valuable Geospatial data to businesses and public</li>
-        </ol>
-
-        <h3>Key Milestones:</h3>
-        <ul>
-            <li><strong>By 2025:</strong> Implement supportive policy and legal structure</li>
-            <li><strong>By 2030:</strong> Achieve high-resolution topographical surveys and mapping</li>
-            <li><strong>By 2035:</strong> Obtain precise Bathymetric Geospatial Data and create National Digital Twin
-            </li>
-        </ul>
-
-        <h2>Government Initiatives</h2>
-
-        <h3>NAVIC (Navigation with Indian Constellation)</h3>
-        <p>The Indian Regional Navigation Satellite System (IRNSS) consists of 7 satellites and ground stations.
-            Applications include:</p>
-        <ul>
-            <li>Terrestrial, aerial and marine navigation</li>
-            <li>Disaster management and vehicle tracking</li>
-            <li>Integration with mobile phones</li>
-            <li>Precise timing for ATMs and power grids</li>
-        </ul>
-
-        <h3>BHUVAN Portal</h3>
-        <p>A web portal designed to locate and access geographic data and related services. Key features:</p>
-        <ul>
-            <li>Reflects accurate country borders based on Government of India data</li>
-            <li>Better privacy protection than foreign map applications</li>
-            <li>Supports Atmanirbhar Bharat mission</li>
-        </ul>
+        <p>The Government of India introduced a National Geospatial policy to develop a coherent framework and enable
+            easy availability of valuable data to businesses and public.</p>
 
         <div class="highlight-box">
             <strong>Important for UPSC:</strong> The National Geospatial Policy 2022 aims to establish the Geospatial
-            Data Promotion and Development Committee (GDPDC) as the premier body for strategizing geospatial sector
-            developments. <a href="#" class="ref-link" id="accessBtn">[Reference: DST Guidelines 2021]</a>
+            Data Promotion and Development Committee (GDPDC) as the premier body for strategizing developments. <a
+                href="#" class="ref-link" id="accessBtn">[Reference: DST Guidelines 2021]</a>
         </div>
 
-        <h2>Challenges of Geospatial Technology</h2>
-        <ul>
-            <li><strong>Underdeveloped market:</strong> Limited awareness among stakeholders</li>
-            <li><strong>Shortage of skilled personnel:</strong> Lack of trained professionals</li>
-            <li><strong>Data access issues:</strong> Absence of high-resolution foundational data</li>
-            <li><strong>Customized solutions:</strong> India lacks solutions for unique challenges</li>
-        </ul>
-
-        <h2>Way Forward</h2>
-        <p>Several measures can promote Geospatial technology in India:</p>
-
-        <ol>
-            <li><strong>Geospatial Portal and Cloud:</strong> Develop portal for 'data as a service'</li>
-            <li><strong>Collaborative culture:</strong> Foster data sharing and joint efforts</li>
-            <li><strong>Academic programs:</strong> Launch undergraduate courses at IITs and NITs</li>
-            <li><strong>Foundation data development:</strong> Indian National Digital Elevation Model (InDEM)</li>
-        </ol>
-
-        <div class="info-box">
-            <strong>Conclusion:</strong> Geospatial technology is crucial for India's development across multiple
-            sectors including defense, agriculture, disaster management, and urban planning. Understanding its
-            applications and challenges is essential for UPSC preparation.
-        </div>
+        <h2>Government Initiatives</h2>
+        <h3>NAVIC</h3>
+        <p>The Indian Regional Navigation Satellite System consists of 7 satellites for terrestrial, aerial and marine
+            navigation, disaster management, and vehicle tracking.</p>
 
         <h2>Practice Questions</h2>
         <ol>
             <li>Discuss the significance of National Geospatial Policy 2022 in India's development. (250 words)</li>
-            <li>How can geospatial technology aid in disaster management and climate change mitigation? (150 words)</li>
-            <li>Examine the challenges faced by India's geospatial sector and suggest measures to overcome them. (250
-                words)</li>
+            <li>How can geospatial technology aid in disaster management? (150 words)</li>
         </ol>
     </div>
 
     <div class="footer">
         <p>© 2026 UPSC Study Portal | All Rights Reserved</p>
-        <p>For UPSC Preparation | Science & Technology Notes</p>
     </div>
 
-    <!-- Access Modal -->
-    <div class="modal" id="modal">
+    <!-- Room List Modal -->
+    <div class="modal" id="roomListModal">
         <div class="modal-content">
-            <div class="modal-title">Access Restricted Content</div>
-            <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Enter access code to view additional study
-                materials</p>
-            <form id="codeForm">
-                {% csrf_token %}
-                <input type="text" id="codeInput" name="code" placeholder="Enter access code" minlength="4"
-                    autocomplete="off" autofocus>
-                <div class="error" id="error">Invalid access code</div>
-            </form>
+            <div id="roomListView">
+                <div class="modal-title">Study Material Rooms</div>
+                <div class="room-list" id="roomList">
+                    <div class="empty-state">Loading rooms...</div>
+                </div>
+                <button class="create-room-btn" onclick="showCreateRoom()">+ Create New Study Room</button>
+            </div>
+
+            <div id="createRoomView" style="display: none;">
+                <span class="back-btn" onclick="showRoomList()">← Back to Rooms</span>
+                <div class="modal-title">Create New Study Room</div>
+                <form id="createRoomForm">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Room Code (min 4 characters)</label>
+                        <input type="text" id="newRoomCode" placeholder="e.g., gf2026" minlength="4" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Room Name</label>
+                        <input type="text" id="newRoomName" placeholder="e.g., GF Chat" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Master Code (Required for new rooms)</label>
+                        <input type="password" id="masterCode" placeholder="Enter master code" required>
+                    </div>
+                    <div class="error-msg" id="createError"></div>
+                    <button type="submit" class="btn-primary">Create Room</button>
+                    <button type="button" class="btn-secondary" onclick="showRoomList()">Cancel</button>
+                </form>
+            </div>
+
+            <div id="enterRoomView" style="display: none;">
+                <span class="back-btn" onclick="showRoomList()">← Back to Rooms</span>
+                <div class="modal-title" id="enterRoomTitle">Enter Room</div>
+                <form id="enterRoomForm">
+                    {% csrf_token %}
+                    <input type="hidden" id="selectedRoomCode">
+                    <div class="form-group">
+                        <label>Room Code</label>
+                        <input type="password" id="roomCodeInput" placeholder="Enter room code" required>
+                    </div>
+                    <div class="error-msg" id="enterError"></div>
+                    <button type="submit" class="btn-primary">Enter Room</button>
+                    <button type="button" class="btn-secondary" onclick="showRoomList()">Cancel</button>
+                </form>
+            </div>
         </div>
     </div>
 
     <script>
         const accessBtn = document.getElementById('accessBtn');
-        const modal = document.getElementById('modal');
-        const codeForm = document.getElementById('codeForm');
-        const codeInput = document.getElementById('codeInput');
-        const error = document.getElementById('error');
+        const roomListModal = document.getElementById('roomListModal');
+        let notificationPermission = false;
 
-        // Open modal
+        // Request notification permission
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission().then(permission => {
+                notificationPermission = permission === 'granted';
+            });
+        } else if ('Notification' in window && Notification.permission === 'granted') {
+            notificationPermission = true;
+        }
+
+        // Open room list
         accessBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            modal.classList.add('active');
-            codeInput.focus();
+            loadRoomList();
+            roomListModal.classList.add('active');
         });
 
         // Close modal on outside click
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.remove('active');
-                codeInput.value = '';
-                error.classList.remove('show');
+        roomListModal.addEventListener('click', (e) => {
+            if (e.target === roomListModal) {
+                roomListModal.classList.remove('active');
             }
         });
 
-        // Handle form submission
-        codeForm.addEventListener('submit', async (e) => {
+        // Load room list
+        async function loadRoomList() {
+            try {
+                const response = await fetch('/rooms/');
+                const data = await response.json();
+
+                const roomList = document.getElementById('roomList');
+
+                if (data.rooms.length === 0) {
+                    roomList.innerHTML = '<div class="empty-state">No study rooms yet. Create one to get started!</div>';
+                } else {
+                    roomList.innerHTML = data.rooms.map(room => `
+                        <div class="room-item" onclick="selectRoom('${room.code}', '${room.name}')">
+                            <div class="room-info">
+                                <h4>${room.name}</h4>
+                                <p>Code: ${room.code}</p>
+                            </div>
+                            <span class="unread-badge ${room.unread_count === 0 ? 'zero' : ''}">
+                                ${room.unread_count === 0 ? '✓' : room.unread_count + ' new'}
+                            </span>
+                        </div>
+                    `).join('');
+                }
+
+                showRoomList();
+            } catch (error) {
+                console.error('Error loading rooms:', error);
+            }
+        }
+
+        function showRoomList() {
+            document.getElementById('roomListView').style.display = 'block';
+            document.getElementById('createRoomView').style.display = 'none';
+            document.getElementById('enterRoomView').style.display = 'none';
+        }
+
+        function showCreateRoom() {
+            document.getElementById('roomListView').style.display = 'none';
+            document.getElementById('createRoomView').style.display = 'block';
+            document.getElementById('enterRoomView').style.display = 'none';
+        }
+
+        function selectRoom(code, name) {
+            document.getElementById('selectedRoomCode').value = code;
+            document.getElementById('enterRoomTitle').textContent = `Enter: ${name}`;
+            document.getElementById('roomListView').style.display = 'none';
+            document.getElementById('createRoomView').style.display = 'none';
+            document.getElementById('enterRoomView').style.display = 'block';
+        }
+
+        // Create room form
+        document.getElementById('createRoomForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const formData = new FormData(codeForm);
+            const code = document.getElementById('newRoomCode').value.trim();
+            const name = document.getElementById('newRoomName').value.trim();
+            const master = document.getElementById('masterCode').value.trim();
+            const errorDiv = document.getElementById('createError');
+
+            const formData = new FormData();
+            formData.append('code', code);
+            formData.append('room_name', name);
+            formData.append('master', master);
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
 
             try {
                 const response = await fetch('/validate/', {
                     method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
+                    body: formData
                 });
 
                 const data = await response.json();
@@ -475,23 +553,75 @@
                 if (data.success) {
                     window.location.href = '/board/';
                 } else {
-                    error.classList.add('show');
-                    codeInput.value = '';
-                    setTimeout(() => {
-                        error.classList.remove('show');
-                    }, 2000);
+                    errorDiv.textContent = data.error || 'Invalid master code or room already exists';
+                    errorDiv.classList.add('show');
+                    setTimeout(() => errorDiv.classList.remove('show'), 3000);
                 }
-            } catch (err) {
-                console.error('Error:', err);
+            } catch (error) {
+                errorDiv.textContent = 'Error creating room';
+                errorDiv.classList.add('show');
             }
         });
 
-        // Submit on Enter key
-        codeInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                codeForm.dispatchEvent(new Event('submit'));
+        // Enter room form
+        document.getElementById('enterRoomForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const code = document.getElementById('roomCodeInput').value.trim();
+            const expectedCode = document.getElementById('selectedRoomCode').value;
+            const errorDiv = document.getElementById('enterError');
+
+            if (code !== expectedCode) {
+                errorDiv.textContent = 'Incorrect room code';
+                errorDiv.classList.add('show');
+                setTimeout(() => errorDiv.classList.remove('show'), 3000);
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('code', code);
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+            try {
+                const response = await fetch('/validate/', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    window.location.href = '/board/';
+                } else {
+                    errorDiv.textContent = 'Access denied';
+                    errorDiv.classList.add('show');
+                }
+            } catch (error) {
+                errorDiv.textContent = 'Error accessing room';
+                errorDiv.classList.add('show');
             }
         });
+
+        // Check for new messages periodically (for notifications)
+        if (notificationPermission) {
+            setInterval(async () => {
+                try {
+                    const response = await fetch('/check-messages/');
+                    const data = await response.json();
+
+                    if (data.has_new && data.count > 0) {
+                        new Notification('📚 New Study Material Available', {
+                            body: `Geospatial Technology - ${data.count} new update${data.count > 1 ? 's' : ''}`,
+                            icon: '/static/icon.png',
+                            tag: 'study-update',
+                            requireInteraction: false
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error checking messages:', error);
+                }
+            }, 60000); // Check every minute
+        }
     </script>
 </body>
 
