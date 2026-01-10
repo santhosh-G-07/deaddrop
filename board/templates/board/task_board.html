@@ -326,10 +326,10 @@
 
                 <div class="task-controls">
                     <select onchange="updateStatus({{ task.id }}, this.value)" onclick="event.stopPropagation()">
-                        <option value="todo" {% if task.status=='todo' %}selected{% endif %}>To Do</option>
-                        <option value="inprogress" {% if task.status=='inprogress' %}selected{% endif %}>In Progress
+                        <option value="todo" {% if task.status == 'todo' %}selected{% endif %}>To Do</option>
+                        <option value="inprogress" {% if task.status == 'inprogress' %}selected{% endif %}>In Progress
                         </option>
-                        <option value="done" {% if task.status=='done' %}selected{% endif %}>Done</option>
+                        <option value="done" {% if task.status == 'done' %}selected{% endif %}>Done</option>
                     </select>
                 </div>
 
