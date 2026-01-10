@@ -64,6 +64,8 @@
             line-height: 1.6;
             opacity: 0.8;
             word-wrap: break-word;
+            white-space: pre-wrap;
+            /* Preserve line breaks and spaces */
         }
 
         .message:last-child {
@@ -272,6 +274,11 @@
 
         // Auto-focus input
         messageInput.focus();
+
+        // Auto-scroll to bottom (like WhatsApp) - shows latest messages
+        window.addEventListener('load', function () {
+            window.scrollTo(0, document.body.scrollHeight);
+        });
 
         // Handle Enter key (Shift+Enter for new line)
         messageInput.addEventListener('keydown', (e) => {

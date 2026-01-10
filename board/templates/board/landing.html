@@ -114,6 +114,13 @@
             margin: 20px 0;
         }
 
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
         .ref-link {
             color: #0066cc;
             text-decoration: none;
@@ -123,6 +130,38 @@
 
         .ref-link:hover {
             color: #004499;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        th {
+            background: #1a1a2e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 13px;
+            margin-top: 40px;
         }
 
         /* Modal Styles */
@@ -188,12 +227,6 @@
             margin-bottom: 5px;
         }
 
-        .room-info p {
-            font-size: 13px;
-            color: #666;
-            margin: 0;
-        }
-
         .unread-badge {
             background: #dc3545;
             color: white;
@@ -207,9 +240,10 @@
             background: #28a745;
         }
 
-        .create-room-btn {
+        .create-room-btn,
+        .btn-primary {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             background: #0066cc;
             color: white;
             border: none;
@@ -220,8 +254,17 @@
             margin-top: 10px;
         }
 
-        .create-room-btn:hover {
-            background: #0052a3;
+        .btn-secondary {
+            width: 100%;
+            padding: 12px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
         }
 
         .form-group {
@@ -250,40 +293,6 @@
             border-color: #0066cc;
         }
 
-        .btn-primary {
-            width: 100%;
-            padding: 12px;
-            background: #0066cc;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .btn-primary:hover {
-            background: #0052a3;
-        }
-
-        .btn-secondary {
-            width: 100%;
-            padding: 12px;
-            background: #6c757d;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .btn-secondary:hover {
-            background: #5a6268;
-        }
-
         .error-msg {
             color: #dc3545;
             font-size: 13px;
@@ -295,17 +304,6 @@
             display: block;
         }
 
-        .success-msg {
-            color: #28a745;
-            font-size: 13px;
-            margin-top: 10px;
-            display: none;
-        }
-
-        .success-msg.show {
-            display: block;
-        }
-
         .back-btn {
             color: #0066cc;
             cursor: pointer;
@@ -314,23 +312,10 @@
             display: inline-block;
         }
 
-        .back-btn:hover {
-            text-decoration: underline;
-        }
-
         .empty-state {
             text-align: center;
             padding: 40px 20px;
             color: #666;
-        }
-
-        .footer {
-            background: #1a1a2e;
-            color: white;
-            padding: 30px 20px;
-            text-align: center;
-            font-size: 13px;
-            margin-top: 40px;
         }
     </style>
 </head>
@@ -349,52 +334,528 @@
         <h1 class="article-title">Geospatial Technology</h1>
 
         <div class="article-meta">
-            By UPSC Editorial Team | Last Updated: January 5, 2026 | Reading Time: 12 min
+            By UPSC Editorial Team | Last Updated: January 10, 2026 | Reading Time: 25 min
         </div>
 
         <div class="article-intro">
             <strong>Overview:</strong> Geospatial technology collects, processes, and illustrates Earth's spatial data.
-            This comprehensive guide covers types, applications, government initiatives, and challenges of Geospatial
-            Technology in India.
+            This comprehensive guide covers types, applications, government initiatives, challenges, and future
+            prospects of Geospatial Technology in India - essential for UPSC Mains GS Paper 3.
         </div>
 
+        <h2>Table of Contents</h2>
+        <ul>
+            <li>Understanding Geospatial Technology</li>
+            <li>Types of Geospatial Technology</li>
+            <li>Components of Geospatial Systems</li>
+            <li>Applications in India</li>
+            <li>National Geospatial Policy 2022</li>
+            <li>Government Initiatives</li>
+            <li>Challenges and Solutions</li>
+            <li>International Cooperation</li>
+            <li>Future Prospects</li>
+        </ul>
+
         <h2>Understanding Geospatial Technology</h2>
-        <p>Geospatial Technology refers to equipment, software, and methods used to acquire, process, and analyse data
-            with a geographic component associated with specific Earth locations.</p>
+        <p>Geospatial Technology refers to the comprehensive set of equipment, software, and methodologies used to
+            acquire, process, analyze, and visualize data that has a geographic or spatial component. This technology
+            enables us to understand, measure, and manage the physical world by associating data with specific locations
+            on Earth's surface.</p>
+
+        <p>The technology encompasses various tools and techniques including Geographic Information Systems (GIS),
+            Remote Sensing (RS), Global Positioning Systems (GPS), and spatial analysis tools. These technologies work
+            together to provide insights into spatial patterns, relationships, and trends that would otherwise remain
+            hidden in traditional data formats.</p>
+
+        <p>In the Indian context, geospatial technology has become increasingly important for planning and development
+            across multiple sectors. The technology enables evidence-based decision-making for urban planning,
+            agricultural management, disaster response, and resource allocation.</p>
+
+        <h2>Types of Geospatial Technology</h2>
+
+        <h3>1. Remote Sensing</h3>
+        <p>Remote Sensing is the science and art of obtaining information about objects or areas from a distance,
+            typically from aircraft or satellites. This technology observes distant objects by analyzing data captured
+            from space or airborne instruments without physical contact.</p>
+
+        <p><strong>Key Features:</strong></p>
+        <ul>
+            <li>Captures electromagnetic radiation reflected or emitted from Earth's surface</li>
+            <li>Provides synoptic view of large areas simultaneously</li>
+            <li>Enables repetitive coverage for temporal analysis</li>
+            <li>Operates across multiple spectral bands (visible, infrared, microwave)</li>
+        </ul>
+
+        <p><strong>Types of Remote Sensing:</strong></p>
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Applications</th>
+            </tr>
+            <tr>
+                <td>Passive Remote Sensing</td>
+                <td>Uses natural energy (sunlight) reflected by objects</td>
+                <td>Land use mapping, vegetation analysis, weather monitoring</td>
+            </tr>
+            <tr>
+                <td>Active Remote Sensing</td>
+                <td>Uses artificial energy source (RADAR, LiDAR)</td>
+                <td>All-weather imaging, 3D terrain modeling, forest structure</td>
+            </tr>
+            <tr>
+                <td>Optical Remote Sensing</td>
+                <td>Captures visible and near-infrared wavelengths</td>
+                <td>Agricultural monitoring, urban planning, water quality</td>
+            </tr>
+            <tr>
+                <td>Microwave Remote Sensing</td>
+                <td>Uses radio waves for imaging</td>
+                <td>Cloud penetration, soil moisture, flood mapping</td>
+            </tr>
+        </table>
+
+        <h3>2. Geographic Information Systems (GIS)</h3>
+        <p>GIS is a computer-based system designed to capture, store, manipulate, analyze, manage, and present all types
+            of geographical data. It integrates hardware, software, and data to capture, manage, analyze, and display
+            geographically referenced information.</p>
+
+        <p><strong>Components of GIS:</strong></p>
+        <ul>
+            <li><strong>Hardware:</strong> Computers, servers, mobile devices, GPS receivers</li>
+            <li><strong>Software:</strong> GIS applications, database management systems, web services</li>
+            <li><strong>Data:</strong> Spatial data (vector, raster) and attribute data</li>
+            <li><strong>People:</strong> GIS professionals, analysts, users</li>
+            <li><strong>Methods:</strong> Analysis techniques, workflows, standards</li>
+        </ul>
+
+        <h3>3. Global Positioning System (GPS)</h3>
+        <p>GPS is a satellite-based navigation system that provides precise location, velocity, and timing information
+            anywhere on Earth. It operates on the principle of trilateration, requiring signals from at least four
+            satellites for accurate 3D positioning.</p>
+
+        <p><strong>How GPS Works:</strong></p>
+        <ol>
+            <li>GPS satellites continuously transmit signals containing time and position data</li>
+            <li>GPS receiver measures signal travel time from multiple satellites</li>
+            <li>Receiver calculates distance to each satellite using speed of light</li>
+            <li>Position is determined by intersection of spheres from multiple satellites</li>
+            <li>Minimum three satellites needed for 2D position, four for 3D with altitude</li>
+        </ol>
+
+        <h2>Components of Geospatial Systems</h2>
+
+        <h3>Data Acquisition</h3>
+        <p>Geospatial data can be acquired through various methods:</p>
+        <ul>
+            <li><strong>Satellite Imagery:</strong> Landsat, Sentinel, MODIS, Planet Labs satellites</li>
+            <li><strong>Aerial Photography:</strong> Aircraft-mounted cameras and sensors</li>
+            <li><strong>UAV/Drones:</strong> High-resolution localized data collection</li>
+            <li><strong>Ground Surveys:</strong> GPS-enabled field data collection</li>
+            <li><strong>Crowdsourcing:</strong> Citizen-contributed spatial data</li>
+            <li><strong>LiDAR:</strong> Light Detection and Ranging for 3D point clouds</li>
+        </ul>
+
+        <h3>Data Processing</h3>
+        <p>Raw geospatial data requires significant processing:</p>
+        <ul>
+            <li>Geometric correction and orthorectification</li>
+            <li>Radiometric calibration and atmospheric correction</li>
+            <li>Image enhancement and filtering</li>
+            <li>Feature extraction and classification</li>
+            <li>Data fusion and integration</li>
+            <li>Quality assessment and validation</li>
+        </ul>
 
         <h2>Applications of Geospatial Technology</h2>
+
+        <h3>1. Agriculture and Food Security</h3>
+        <p>Geospatial technology revolutionizes agricultural practices through:</p>
         <ul>
-            <li><strong>Climate Change and Disaster Management:</strong> Improves situational awareness for natural
-                disasters</li>
-            <li><strong>Healthcare:</strong> Tracks virus spread and identifies high-risk areas</li>
-            <li><strong>Agriculture:</strong> Assesses vegetation health in specific areas</li>
-            <li><strong>Transport:</strong> Location tracking and route navigation</li>
+            <li><strong>Precision Agriculture:</strong> Variable rate application of inputs based on field variability
+            </li>
+            <li><strong>Crop Monitoring:</strong> NDVI (Normalized Difference Vegetation Index) for crop health
+                assessment</li>
+            <li><strong>Yield Prediction:</strong> Integration of satellite data with weather and soil information</li>
+            <li><strong>Irrigation Management:</strong> Soil moisture mapping and water stress detection</li>
+            <li><strong>Pest and Disease Detection:</strong> Early warning systems using spectral signatures</li>
+            <li><strong>Farm Advisory:</strong> Location-specific recommendations for farmers</li>
+        </ul>
+
+        <h3>2. Urban Planning and Smart Cities</h3>
+        <p>Cities leverage geospatial technology for sustainable development:</p>
+        <ul>
+            <li>Land use and zoning analysis</li>
+            <li>Infrastructure planning (roads, utilities, public transport)</li>
+            <li>3D city modeling and visualization</li>
+            <li>Traffic flow analysis and optimization</li>
+            <li>Urban growth monitoring and prediction</li>
+            <li>Smart parking and waste management systems</li>
+            <li>Public amenity location optimization</li>
+        </ul>
+
+        <h3>3. Disaster Management</h3>
+        <p>Critical role in all phases of disaster management:</p>
+
+        <div class="info-box">
+            <strong>Disaster Management Cycle:</strong><br>
+            <strong>Prevention:</strong> Hazard mapping, vulnerability assessment<br>
+            <strong>Preparedness:</strong> Emergency response planning, evacuation route planning<br>
+            <strong>Response:</strong> Damage assessment, rescue coordination, resource allocation<br>
+            <strong>Recovery:</strong> Reconstruction planning, impact assessment, monitoring
+        </div>
+
+        <h3>4. Environmental Monitoring</h3>
+        <ul>
+            <li>Forest cover mapping and deforestation tracking</li>
+            <li>Wildlife habitat monitoring and corridor identification</li>
+            <li>Air and water quality monitoring</li>
+            <li>Climate change impact assessment</li>
+            <li>Glacier monitoring and retreat analysis</li>
+            <li>Coastal zone management and erosion monitoring</li>
+            <li>Wetland mapping and conservation</li>
+        </ul>
+
+        <h3>5. Water Resources Management</h3>
+        <ul>
+            <li>Watershed delineation and characterization</li>
+            <li>Groundwater potential mapping</li>
+            <li>Reservoir capacity monitoring</li>
+            <li>Irrigation canal network planning</li>
+            <li>Flood inundation modeling</li>
+            <li>Water quality assessment</li>
+        </ul>
+
+        <h2>Geospatial Technology in India</h2>
+
+        <p>India has made significant strides in geospatial technology development and application. With its vast
+            geographical expanse and diverse challenges, geospatial technology has become instrumental in national
+            development.</p>
+
+        <div class="info-box">
+            <strong>Market Size:</strong> According to the India Geospatial Artha Report 2021:<br>
+            • Current market value: ₹38,972 crore<br>
+            • Employment: 4.7 lakh professionals<br>
+            • Projected 2025 value: ₹63,100 crore<br>
+            • Expected growth rate: 12.8% CAGR<br>
+            • Projected 2025 employment: 9.5 lakh professionals
+        </div>
+
+        <h3>Key Institutions</h3>
+        <ul>
+            <li><strong>Survey of India (SoI):</strong> National mapping agency, established 1767</li>
+            <li><strong>ISRO:</strong> Space-based earth observation and satellite navigation</li>
+            <li><strong>National Remote Sensing Centre (NRSC):</strong> Satellite data acquisition and distribution</li>
+            <li><strong>Indian Institute of Remote Sensing (IIRS):</strong> Capacity building and training</li>
+            <li><strong>National Informatics Centre (NIC):</strong> GIS-based e-governance applications</li>
+            <li><strong>Remote Sensing Application Centers (RSACs):</strong> State-level implementation</li>
         </ul>
 
         <h2>National Geospatial Policy, 2022</h2>
-        <p>The Government of India introduced a National Geospatial policy to develop a coherent framework and enable
-            easy availability of valuable data to businesses and public.</p>
+
+        <p>The Government of India introduced a comprehensive National Geospatial Policy in February 2022 with the
+            vision to unlock India's geospatial economy and realize its full potential.</p>
+
+        <h3>Objectives</h3>
+        <ol>
+            <li>Develop a coherent national framework for geospatial data and services</li>
+            <li>Enable easy availability of geospatial data collected using public funds</li>
+            <li>Promote domestic geospatial industry and innovation</li>
+            <li>Build geospatial capacity and skilled workforce</li>
+            <li>Establish modern digital infrastructure</li>
+        </ol>
 
         <div class="highlight-box">
             <strong>Important for UPSC:</strong> The National Geospatial Policy 2022 aims to establish the Geospatial
-            Data Promotion and Development Committee (GDPDC) as the premier body for strategizing developments. <a
-                href="#" class="ref-link" id="accessBtn">[Reference: DST Guidelines 2021]</a>
+            Data Promotion and Development Committee (GDPDC) as the premier body for strategizing geospatial sector
+            developments. The Department of Science & Technology will serve as the nodal agency. <a href="#"
+                class="ref-link" id="accessBtn">[Reference: DST Guidelines 2021]</a>
         </div>
 
-        <h2>Government Initiatives</h2>
-        <h3>NAVIC</h3>
-        <p>The Indian Regional Navigation Satellite System consists of 7 satellites for terrestrial, aerial and marine
-            navigation, disaster management, and vehicle tracking.</p>
+        <h3>Key Milestones</h3>
+        <table>
+            <tr>
+                <th>Year</th>
+                <th>Milestone</th>
+            </tr>
+            <tr>
+                <td>By 2025</td>
+                <td>• Supportive policy framework<br>• Broadened data access<br>• Enhanced commercial value-added
+                    services</td>
+            </tr>
+            <tr>
+                <td>By 2030</td>
+                <td>• High-resolution topographical surveys<br>• Complete mapping of urban, rural, forest areas<br>•
+                    Indian National Digital Elevation Model (InDEM)</td>
+            </tr>
+            <tr>
+                <td>By 2035</td>
+                <td>• Precise bathymetric data for inland waters<br>• National Digital Twin for major cities<br>•
+                    Advanced spatial analytics platform</td>
+            </tr>
+        </table>
 
-        <h2>Practice Questions</h2>
-        <ol>
-            <li>Discuss the significance of National Geospatial Policy 2022 in India's development. (250 words)</li>
-            <li>How can geospatial technology aid in disaster management? (150 words)</li>
-        </ol>
+        <h2>Government Initiatives</h2>
+
+        <h3>1. NAVIC (Navigation with Indian Constellation)</h3>
+        <p>India's independent regional navigation satellite system, also known as IRNSS (Indian Regional Navigation
+            Satellite System).</p>
+
+        <p><strong>Constellation Details:</strong></p>
+        <ul>
+            <li>7 satellites (3 geostationary, 4 geosynchronous)</li>
+            <li>Service area: India and region extending 1,500 km beyond borders</li>
+            <li>Position accuracy: Better than 10 meters</li>
+            <li>Dual frequency bands: L5 and S band</li>
+        </ul>
+
+        <p><strong>Applications:</strong></p>
+        <ul>
+            <li>Terrestrial, aerial, and marine navigation</li>
+            <li>Disaster management and relief operations</li>
+            <li>Vehicle tracking and fleet management</li>
+            <li>Integration with mobile phones</li>
+            <li>Precise timing for ATMs and power grids</li>
+            <li>Mapping and geodetic data capture</li>
+            <li>Visual and voice navigation for drivers</li>
+        </ul>
+
+        <h3>2. BHUVAN Portal</h3>
+        <p>India's indigenous geospatial platform developed by ISRO, providing access to Indian Remote Sensing satellite
+            data and services.</p>
+
+        <p><strong>Key Features:</strong></p>
+        <ul>
+            <li>High-resolution satellite imagery of India</li>
+            <li>2D and 3D visualization capabilities</li>
+            <li>Thematic services for various sectors</li>
+            <li>Disaster support services</li>
+            <li>Mobile applications for field data collection</li>
+            <li>Better privacy protection than foreign platforms</li>
+        </ul>
+
+        <h3>3. PM Gati Shakti National Master Plan</h3>
+        <p>Launched in October 2021, this initiative uses geospatial technology for integrated infrastructure planning.
+        </p>
+
+        <p><strong>Features:</strong></p>
+        <ul>
+            <li>Digital platform integrating 16 ministries</li>
+            <li>200+ data layers for planning</li>
+            <li>Real-time project monitoring</li>
+            <li>Synchronized infrastructure development</li>
+            <li>Elimination of departmental silos</li>
+        </ul>
+
+        <h3>4. Digital India Land Record Modernization Programme (DILRMP)</h3>
+        <ul>
+            <li>Digitization of land records using geospatial technology</li>
+            <li>Integration with property registration</li>
+            <li>Automatic mutation of records</li>
+            <li>Reduction in land disputes</li>
+            <li>Transparent land ownership</li>
+        </ul>
+
+        <h3>5. Yuktdhara Platform</h3>
+        <p>Launched by Ministry of Rural Development for geospatial planning of MGNREGA and other rural development
+            programs.</p>
+
+        <h2>Challenges of Geospatial Technology</h2>
+
+        <h3>1. Technical Challenges</h3>
+        <ul>
+            <li><strong>Data Quality:</strong> Inconsistent spatial data quality and accuracy</li>
+            <li><strong>Interoperability:</strong> Lack of standards for data exchange</li>
+            <li><strong>Processing Power:</strong> High computational requirements for big data</li>
+            <li><strong>Cloud Coverage:</strong> Limitations in optical remote sensing during monsoons</li>
+            <li><strong>Data Latency:</strong> Time gap between data acquisition and availability</li>
+        </ul>
+
+        <h3>2. Institutional Challenges</h3>
+        <ul>
+            <li>Fragmented data collection across multiple agencies</li>
+            <li>Absence of single nodal agency for coordination</li>
+            <li>Limited data sharing between departments</li>
+            <li>Bureaucratic hurdles in data access</li>
+            <li>Intellectual property rights concerns</li>
+        </ul>
+
+        <h3>3. Capacity and Skill Gaps</h3>
+        <ul>
+            <li>Shortage of trained geospatial professionals</li>
+            <li>Limited academic programs in Indian universities</li>
+            <li>Brain drain to developed countries</li>
+            <li>Inadequate industry-academia linkage</li>
+            <li>Lack of specialized training centers</li>
+        </ul>
+
+        <h3>4. Market Development</h3>
+        <ul>
+            <li>Low awareness among potential users</li>
+            <li>Limited domestic geospatial industry</li>
+            <li>Dependence on foreign software and platforms</li>
+            <li>Absence of customized Indian solutions</li>
+            <li>High cost of proprietary software</li>
+        </ul>
+
+        <h2>Way Forward</h2>
+
+        <h3>1. Policy and Governance</h3>
+        <ul>
+            <li>Implementation of National Geospatial Policy</li>
+            <li>Creation of National Spatial Data Infrastructure</li>
+            <li>Establishment of data sharing protocols</li>
+            <li>Public-private partnerships for innovation</li>
+            <li>Regulatory framework for data privacy and security</li>
+        </ul>
+
+        <h3>2. Capacity Building</h3>
+        <ul>
+            <li>Introduction of geospatial courses in IITs and NITs</li>
+            <li>Establishment of dedicated geospatial university</li>
+            <li>Industry certification programs</li>
+            <li>Faculty development programs</li>
+            <li>International collaboration for knowledge exchange</li>
+        </ul>
+
+        <h3>3. Technology Development</h3>
+        <ul>
+            <li>Development of indigenous software platforms</li>
+            <li>Investment in AI and ML for geospatial analytics</li>
+            <li>Cloud-based geospatial services</li>
+            <li>Integration with emerging technologies (IoT, 5G)</li>
+            <li>Open-source geospatial ecosystem</li>
+        </ul>
+
+        <h3>4. Application Development</h3>
+        <ul>
+            <li>Sector-specific geospatial solutions</li>
+            <li>Mobile-first applications for field use</li>
+            <li>Integration with citizen services</li>
+            <li>Real-time decision support systems</li>
+            <li>Geospatial big data analytics</li>
+        </ul>
+
+        <h2>International Cooperation</h2>
+
+        <p>India actively participates in international geospatial initiatives:</p>
+
+        <ul>
+            <li><strong>Committee on Earth Observation Satellites (CEOS):</strong> International coordination of earth
+                observation programs</li>
+            <li><strong>Group on Earth Observations (GEO):</strong> Promoting open data sharing</li>
+            <li><strong>UN-GGIM:</strong> United Nations initiative on Global Geospatial Information Management</li>
+            <li><strong>Bilateral Cooperation:</strong> Data exchange agreements with USA, France, Japan</li>
+            <li><strong>South-South Cooperation:</strong> Capacity building in developing nations</li>
+        </ul>
+
+        <h2>Future Prospects</h2>
+
+        <h3>Emerging Technologies</h3>
+        <ul>
+            <li><strong>Artificial Intelligence:</strong> Automated feature extraction and classification</li>
+            <li><strong>Machine Learning:</strong> Predictive modeling and pattern recognition</li>
+            <li><strong>Big Data Analytics:</strong> Processing massive geospatial datasets</li>
+            <li><strong>Cloud Computing:</strong> Scalable geospatial processing and storage</li>
+            <li><strong>Internet of Things:</strong> Real-time spatial data streaming</li>
+            <li><strong>Digital Twins:</strong> Virtual replicas of physical infrastructure</li>
+            <li><strong>Augmented Reality:</strong> Spatial data visualization in real-world context</li>
+        </ul>
+
+        <h3>Sector-wise Growth Potential</h3>
+        <table>
+            <tr>
+                <th>Sector</th>
+                <th>Current Use</th>
+                <th>Future Potential</th>
+            </tr>
+            <tr>
+                <td>Agriculture</td>
+                <td>Crop monitoring, yield prediction</td>
+                <td>AI-driven precision farming, automated irrigation</td>
+            </tr>
+            <tr>
+                <td>Urban Planning</td>
+                <td>Land use mapping, infrastructure planning</td>
+                <td>Digital twins, smart city management</td>
+            </tr>
+            <tr>
+                <td>Transportation</td>
+                <td>Navigation, route optimization</td>
+                <td>Autonomous vehicles, dynamic traffic management</td>
+            </tr>
+            <tr>
+                <td>Defense</td>
+                <td>Terrain analysis, border surveillance</td>
+                <td>Real-time intelligence, autonomous systems</td>
+            </tr>
+            <tr>
+                <td>E-commerce</td>
+                <td>Delivery optimization</td>
+                <td>Drone delivery, hyperlocal services</td>
+            </tr>
+        </table>
+
+        <h2>Conclusion</h2>
+
+        <p>Geospatial technology represents a transformative force in India's development journey. As the country
+            strives to achieve its vision of becoming a developed nation by 2047, geospatial technology will play an
+            increasingly central role across all sectors of economy and governance.</p>
+
+        <p>The National Geospatial Policy 2022 provides a comprehensive framework for harnessing this potential. Success
+            will depend on effective implementation, capacity building, and fostering innovation through public-private
+            partnerships. With India's growing space capabilities and digital infrastructure, the geospatial sector is
+            poised for exponential growth.</p>
+
+        <p>For UPSC aspirants, understanding geospatial technology is crucial not just for Science & Technology papers,
+            but also for comprehending modern approaches to governance, development, and strategic affairs.</p>
+
+        <h2>Practice Questions for UPSC Mains</h2>
+
+        <div class="info-box">
+            <strong>GS Paper 3 - Science & Technology</strong>
+            <ol>
+                <li>Discuss the significance of National Geospatial Policy 2022 in India's development trajectory. How
+                    can it contribute to achieving the vision of Viksit Bharat by 2047? (250 words)</li>
+                <li>How can geospatial technology aid in disaster management and climate change mitigation in India?
+                    Discuss with suitable examples. (150 words)</li>
+                <li>Examine the challenges faced by India's geospatial sector and suggest measures to overcome them.
+                    (250 words)</li>
+                <li>"Geospatial technology is the backbone of modern governance." Critically analyze this statement with
+                    reference to India's e-governance initiatives. (150 words)</li>
+                <li>Compare India's NAVIC system with GPS. What strategic advantages does an indigenous navigation
+                    system provide? (250 words)</li>
+            </ol>
+        </div>
+
+        <h2>Key Terms Glossary</h2>
+        <ul>
+            <li><strong>NDVI:</strong> Normalized Difference Vegetation Index - measure of vegetation health</li>
+            <li><strong>DEM:</strong> Digital Elevation Model - 3D representation of terrain</li>
+            <li><strong>LiDAR:</strong> Light Detection and Ranging - laser-based 3D mapping</li>
+            <li><strong>Orthorectification:</strong> Geometric correction of imagery to remove distortions</li>
+            <li><strong>Geocoding:</strong> Converting addresses to geographic coordinates</li>
+            <li><strong>Spatial Analysis:</strong> Analyzing spatial patterns and relationships</li>
+            <li><strong>Raster Data:</strong> Grid-based spatial data (e.g., satellite imagery)</li>
+            <li><strong>Vector Data:</strong> Point, line, and polygon-based spatial data</li>
+        </ul>
+
+        <h2>Important Facts and Figures</h2>
+        <ul>
+            <li>India is among the top 6 space-faring nations</li>
+            <li>ISRO operates 50+ operational satellites</li>
+            <li>Survey of India maintains 7 lakh square km of topographic mapping</li>
+            <li>Bhuvan portal has 10+ lakh registered users</li>
+            <li>India's first earth observation satellite: Bhaskara-1 (1979)</li>
+            <li>First Indian satellite with GPS: GSAT-6 (2015)</li>
+            <li>Number of NAVIC satellites: 7 operational</li>
+        </ul>
     </div>
 
     <div class="footer">
-        <p>© 2026 UPSC Study Portal | All Rights Reserved</p>
+        <p>© 2026 UPSC Study Portal | All Rights Reserved | For Educational Purposes</p>
+        <p>Disclaimer: This content is prepared for UPSC aspirants and should be cross-verified with official sources
+        </p>
     </div>
 
     <!-- Room List Modal -->
@@ -454,7 +915,6 @@
         const roomListModal = document.getElementById('roomListModal');
         let notificationPermission = false;
 
-        // Request notification permission
         if ('Notification' in window && Notification.permission === 'default') {
             Notification.requestPermission().then(permission => {
                 notificationPermission = permission === 'granted';
@@ -463,26 +923,22 @@
             notificationPermission = true;
         }
 
-        // Open room list
         accessBtn.addEventListener('click', (e) => {
             e.preventDefault();
             loadRoomList();
             roomListModal.classList.add('active');
         });
 
-        // Close modal on outside click
         roomListModal.addEventListener('click', (e) => {
             if (e.target === roomListModal) {
                 roomListModal.classList.remove('active');
             }
         });
 
-        // Load room list
         async function loadRoomList() {
             try {
                 const response = await fetch('/rooms/');
                 const data = await response.json();
-
                 const roomList = document.getElementById('roomList');
 
                 if (data.rooms.length === 0) {
@@ -499,7 +955,6 @@
                         </div>
                     `).join('');
                 }
-
                 showRoomList();
             } catch (error) {
                 console.error('Error loading rooms:', error);
@@ -526,10 +981,8 @@
             document.getElementById('enterRoomView').style.display = 'block';
         }
 
-        // Create room form
         document.getElementById('createRoomForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-
             const code = document.getElementById('newRoomCode').value.trim();
             const name = document.getElementById('newRoomName').value.trim();
             const master = document.getElementById('masterCode').value.trim();
@@ -542,11 +995,7 @@
             formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
 
             try {
-                const response = await fetch('/validate/', {
-                    method: 'POST',
-                    body: formData
-                });
-
+                const response = await fetch('/validate/', { method: 'POST', body: formData });
                 const data = await response.json();
 
                 if (data.success) {
@@ -562,10 +1011,8 @@
             }
         });
 
-        // Enter room form
         document.getElementById('enterRoomForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-
             const code = document.getElementById('roomCodeInput').value.trim();
             const expectedCode = document.getElementById('selectedRoomCode').value;
             const errorDiv = document.getElementById('enterError');
@@ -582,11 +1029,7 @@
             formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
 
             try {
-                const response = await fetch('/validate/', {
-                    method: 'POST',
-                    body: formData
-                });
-
+                const response = await fetch('/validate/', { method: 'POST', body: formData });
                 const data = await response.json();
 
                 if (data.success) {
@@ -601,17 +1044,14 @@
             }
         });
 
-        // Check for new messages periodically (for notifications)
         if (notificationPermission) {
             setInterval(async () => {
                 try {
                     const response = await fetch('/check-messages/');
                     const data = await response.json();
-
                     if (data.has_new && data.count > 0) {
                         new Notification('📚 New Study Material Available', {
                             body: `Geospatial Technology - ${data.count} new update${data.count > 1 ? 's' : ''}`,
-                            icon: '/static/icon.png',
                             tag: 'study-update',
                             requireInteraction: false
                         });
@@ -619,7 +1059,7 @@
                 } catch (error) {
                     console.error('Error checking messages:', error);
                 }
-            }, 60000); // Check every minute
+            }, 60000);
         }
     </script>
 </body>

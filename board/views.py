@@ -118,7 +118,7 @@ def update_room_name(request):
 
 
 def board(request):
-    """Main message board - shows ALL messages from current room"""
+    """Main message board - shows messages from last 24 hours only"""
     if not request.session.get('authenticated'):
         return redirect('landing')
     
@@ -141,8 +141,13 @@ def board(request):
             )
             return redirect('board')
     
-    # Get ALL messages for THIS ROOM (messages persist forever)
-    messages = Message.objects.filter(room_code=room_code)
+    # Get messages from LAST 24 HOURS only (auto-delete after 24 hours)
+    from datetime import timedelta
+    last_24_hours = timezone.now() - timedelta(hours=24)
+    messages = Message.objects.filter(
+        room_code=room_code,
+        created_at__gte=last_24_hours
+    )
     
     # Update last visit time for unread tracking
     if not request.session.session_key:
