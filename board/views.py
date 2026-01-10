@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.utils import timezone
 from django.db.models import Count, Max
-from .models import Message, Room, RoomVisit
+from .models import Message, Room, RoomVisit, Task, TaskUpdate
 import os
 from dotenv import load_dotenv
 
@@ -22,36 +22,49 @@ def get_room_list(request):
         request.session.create()
     
     session_key = request.session.session_key
-    
-    # Get all rooms
     rooms = Room.objects.all()
     
     room_data = []
     for room in rooms:
-        # Get last visit time for this session
         try:
             visit = RoomVisit.objects.get(room_code=room.code, session_key=session_key)
             last_visit = visit.last_visit
         except RoomVisit.DoesNotExist:
             last_visit = None
         
-        # Count unread messages
         if last_visit:
-            unread_count = Message.objects.filter(
-                room_code=room.code,
-                created_at__gt=last_visit
-            ).count()
+            if room.room_type == 'chat':
+                unread_count = Message.objects.filter(
+                    room_code=room.code,
+                    created_at__gt=last_visit
+                ).count()
+            else:  # task room
+                unread_count = TaskUpdate.objects.filter(
+                    task__room_code=room.code,
+                    created_at__gt=last_visit
+                ).count()
         else:
-            unread_count = Message.objects.filter(room_code=room.code).count()
+            if room.room_type == 'chat':
+                unread_count = Message.objects.filter(room_code=room.code).count()
+            else:
+                unread_count = TaskUpdate.objects.filter(task__room_code=room.code).count()
         
-        # Get last message time
-        last_message = Message.objects.filter(room_code=room.code).last()
+        last_message = None
+        if room.room_type == 'chat':
+            last_msg = Message.objects.filter(room_code=room.code).last()
+            if last_msg:
+                last_message = last_msg.created_at.isoformat()
+        else:
+            last_task = Task.objects.filter(room_code=room.code).last()
+            if last_task:
+                last_message = last_task.updated_at.isoformat()
         
         room_data.append({
             'code': room.code,
             'name': room.name,
+            'room_type': room.room_type,
             'unread_count': unread_count,
-            'last_message_time': last_message.created_at.isoformat() if last_message else None,
+            'last_message_time': last_message,
             'created_at': room.created_at.isoformat()
         })
     
@@ -64,20 +77,18 @@ def validate_code(request):
         code = request.POST.get('code', '').strip()
         master = request.POST.get('master', '').strip()
         room_name = request.POST.get('room_name', '').strip()
+        room_type = request.POST.get('room_type', 'chat').strip()
         
-        # Minimum 4 characters
         if not code or len(code) < 4:
             return JsonResponse({'success': False, 'error': 'Code too short'})
         
-        # Check if room exists
         try:
             room = Room.objects.get(code=code)
-            # Room exists, no master code needed
             request.session['authenticated'] = True
             request.session['room_code'] = code
-            return JsonResponse({'success': True, 'exists': True})
+            request.session['room_type'] = room.room_type
+            return JsonResponse({'success': True, 'exists': True, 'room_type': room.room_type})
         except Room.DoesNotExist:
-            # New room - need master code
             if master != MASTER_CODE:
                 return JsonResponse({
                     'success': False, 
@@ -85,14 +96,14 @@ def validate_code(request):
                     'need_master': True
                 })
             
-            # Create new room
             if not room_name:
                 room_name = f"Room {code}"
             
-            Room.objects.create(code=code, name=room_name)
+            Room.objects.create(code=code, name=room_name, room_type=room_type)
             request.session['authenticated'] = True
             request.session['room_code'] = code
-            return JsonResponse({'success': True, 'exists': False, 'created': True})
+            request.session['room_type'] = room_type
+            return JsonResponse({'success': True, 'exists': False, 'created': True, 'room_type': room_type})
     
     return JsonResponse({'success': False})
 
@@ -123,13 +134,18 @@ def board(request):
         return redirect('landing')
     
     room_code = request.session.get('room_code')
+    room_type = request.session.get('room_type', 'chat')
+    
     if not room_code:
         return redirect('landing')
     
-    # Get or create room
+    # Redirect to task board if it's a task room
+    if room_type == 'task':
+        return redirect('task_board')
+    
     room, created = Room.objects.get_or_create(
         code=room_code,
-        defaults={'name': f'Room {room_code}'}
+        defaults={'name': f'Room {room_code}', 'room_type': 'chat'}
     )
     
     if request.method == 'POST':
@@ -141,7 +157,6 @@ def board(request):
             )
             return redirect('board')
     
-    # Get messages from LAST 24 HOURS only (auto-delete after 24 hours)
     from datetime import timedelta
     last_24_hours = timezone.now() - timedelta(hours=24)
     messages = Message.objects.filter(
@@ -149,7 +164,6 @@ def board(request):
         created_at__gte=last_24_hours
     )
     
-    # Update last visit time for unread tracking
     if not request.session.session_key:
         request.session.create()
     
@@ -167,6 +181,104 @@ def board(request):
     return render(request, 'board/board.html', context)
 
 
+def task_board(request):
+    """Task management board - tasks stay forever"""
+    if not request.session.get('authenticated'):
+        return redirect('landing')
+    
+    room_code = request.session.get('room_code')
+    if not room_code:
+        return redirect('landing')
+    
+    room, created = Room.objects.get_or_create(
+        code=room_code,
+        defaults={'name': f'Room {room_code}', 'room_type': 'task'}
+    )
+    
+    # Get all tasks grouped by due date
+    tasks = Task.objects.filter(room_code=room_code).order_by('-created_at')
+    
+    if not request.session.session_key:
+        request.session.create()
+    
+    RoomVisit.objects.update_or_create(
+        room_code=room_code,
+        session_key=request.session.session_key,
+        defaults={'last_visit': timezone.now()}
+    )
+    
+    context = {
+        'tasks': tasks,
+        'room_code': room_code,
+        'room_name': room.name,
+    }
+    return render(request, 'board/task_board.html', context)
+
+
+def create_task(request):
+    """Create a new task"""
+    if request.method == 'POST':
+        room_code = request.session.get('room_code')
+        if not room_code:
+            return JsonResponse({'success': False, 'error': 'Not authenticated'})
+        
+        title = request.POST.get('title', '').strip()
+        description = request.POST.get('description', '').strip()
+        priority = request.POST.get('priority', 'medium')
+        due_date = request.POST.get('due_date', '')
+        
+        if not title:
+            return JsonResponse({'success': False, 'error': 'Title required'})
+        
+        task = Task.objects.create(
+            room_code=room_code,
+            title=title,
+            description=description,
+            priority=priority,
+            due_date=due_date if due_date else None
+        )
+        
+        return JsonResponse({'success': True, 'task_id': task.id})
+    
+    return JsonResponse({'success': False})
+
+
+def update_task_status(request):
+    """Update task status"""
+    if request.method == 'POST':
+        task_id = request.POST.get('task_id')
+        status = request.POST.get('status')
+        
+        try:
+            task = Task.objects.get(id=task_id)
+            task.status = status
+            task.save()
+            return JsonResponse({'success': True})
+        except Task.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Task not found'})
+    
+    return JsonResponse({'success': False})
+
+
+def add_task_update(request):
+    """Add update/comment to task"""
+    if request.method == 'POST':
+        task_id = request.POST.get('task_id')
+        text = request.POST.get('text', '').strip()
+        
+        if not text:
+            return JsonResponse({'success': False, 'error': 'Text required'})
+        
+        try:
+            task = Task.objects.get(id=task_id)
+            TaskUpdate.objects.create(task=task, text=text)
+            return JsonResponse({'success': True})
+        except Task.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Task not found'})
+    
+    return JsonResponse({'success': False})
+
+
 def check_new_messages(request):
     """Check for new messages in current room (for notifications)"""
     if not request.session.get('authenticated'):
@@ -176,7 +288,6 @@ def check_new_messages(request):
     if not room_code:
         return JsonResponse({'has_new': False})
     
-    # Get last check time from session
     last_check = request.session.get('last_message_check')
     
     if last_check:
@@ -189,7 +300,6 @@ def check_new_messages(request):
     else:
         new_count = 0
     
-    # Update last check time
     request.session['last_message_check'] = timezone.now().isoformat()
     
     return JsonResponse({

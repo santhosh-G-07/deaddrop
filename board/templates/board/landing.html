@@ -884,6 +884,13 @@
                         <input type="text" id="newRoomName" placeholder="e.g., GF Chat" required>
                     </div>
                     <div class="form-group">
+                        <label>Room Type</label>
+                        <select id="roomType">
+                            <option value="chat">💬 Chat Room (messages delete after 24hrs)</option>
+                            <option value="task">📋 Task Room (tasks stay forever)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label>Master Code (Required for new rooms)</label>
                         <input type="password" id="masterCode" placeholder="Enter master code" required>
                     </div>
@@ -945,16 +952,18 @@
                 if (data.rooms.length === 0) {
                     roomList.innerHTML = '<div class="empty-state">No study rooms yet. Create one to get started!</div>';
                 } else {
-                    roomList.innerHTML = data.rooms.map(room => `
+                    roomList.innerHTML = data.rooms.map(room => {
+                        const icon = room.room_type === 'task' ? '📋' : '💬';
+                        return `
                         <div class="room-item" onclick="selectRoom('${room.code}', '${room.name}')">
                             <div class="room-info">
-                                <h4>${room.name}</h4>
+                                <h4>${icon} ${room.name}</h4>
                             </div>
                             <span class="unread-badge ${room.unread_count === 0 ? 'zero' : ''}">
                                 ${room.unread_count === 0 ? '✓' : room.unread_count + ' new'}
                             </span>
                         </div>
-                    `).join('');
+                    `}).join('');
                 }
                 showRoomList();
             } catch (error) {
@@ -994,12 +1003,14 @@
             e.preventDefault();
             const code = document.getElementById('newRoomCode').value.trim();
             const name = document.getElementById('newRoomName').value.trim();
+            const roomType = document.getElementById('roomType').value;
             const master = document.getElementById('masterCode').value.trim();
             const errorDiv = document.getElementById('createError');
 
             const formData = new FormData();
             formData.append('code', code);
             formData.append('room_name', name);
+            formData.append('room_type', roomType);
             formData.append('master', master);
             formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
 
@@ -1008,7 +1019,12 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    window.location.href = '/board/';
+                    // Redirect based on room type
+                    if (data.room_type === 'task') {
+                        window.location.href = '/task-board/';
+                    } else {
+                        window.location.href = '/board/';
+                    }
                 } else {
                     errorDiv.textContent = data.error || 'Invalid master code or room already exists';
                     errorDiv.classList.add('show');
@@ -1042,7 +1058,12 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    window.location.href = '/board/';
+                    // Redirect based on room type
+                    if (data.room_type === 'task') {
+                        window.location.href = '/task-board/';
+                    } else {
+                        window.location.href = '/board/';
+                    }
                 } else {
                     errorDiv.textContent = 'Access denied';
                     errorDiv.classList.add('show');

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Board</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f5f5;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .logout {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .logout:hover {
+            color: #000;
+        }
+
+        .add-task-btn {
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .add-task-btn:hover {
+            background: #0056b3;
+        }
+
+        .task-list {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .task {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .task:last-child {
+            border-bottom: none;
+        }
+
+        .task:hover {
+            background: #f9f9f9;
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .task-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .task-meta {
+            display: flex;
+            gap: 10px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-todo {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .status-inprogress {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .status-done {
+            background: #28a745;
+            color: white;
+        }
+
+        .priority-high {
+            color: #dc3545;
+        }
+
+        .priority-medium {
+            color: #fd7e14;
+        }
+
+        .priority-low {
+            color: #6c757d;
+        }
+
+        .task-details {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .task-details.expanded {
+            display: block;
+        }
+
+        .task-description {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+        }
+
+        .task-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .task-controls select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .task-updates {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+
+        .update {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .update-time {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .add-update-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .add-update-form input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .add-update-form button {
+            padding: 8px 16px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>📋 {{ room_name }} - Task Board</h1>
+        <a href="{% url 'logout' %}" class="logout">Exit</a>
+    </div>
+
+    <button class="add-task-btn" onclick="showAddTask()">+ Add New Task</button>
+
+    <div class="task-list">
+        {% if tasks %}
+        {% for task in tasks %}
+        <div class="task" onclick="toggleTask({{ task.id }})">
+            <div class="task-header">
+                <div class="task-title">{{ task.title }}</div>
+                <div class="task-meta">
+                    <span class="status-badge status-{{ task.status }}">
+                        {% if task.status == 'todo' %}To Do
+                        {% elif task.status == 'inprogress' %}In Progress
+                        {% else %}Done{% endif %}
+                    </span>
+                    <span class="priority-{{ task.priority }}">
+                        {% if task.priority == 'high' %}🔴 High
+                        {% elif task.priority == 'medium' %}🟡 Medium
+                        {% else %}🟢 Low{% endif %}
+                    </span>
+                    {% if task.due_date %}
+                    <span>📅 {{ task.due_date }}</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="task-details" id="task-{{ task.id }}">
+                {% if task.description %}
+                <div class="task-description">{{ task.description }}</div>
+                {% endif %}
+
+                <div class="task-controls">
+                    <select onchange="updateStatus({{ task.id }}, this.value)" onclick="event.stopPropagation()">
+                        <option value="todo" {% if task.status=='todo' %}selected{% endif %}>To Do</option>
+                        <option value="inprogress" {% if task.status=='inprogress' %}selected{% endif %}>In Progress
+                        </option>
+                        <option value="done" {% if task.status=='done' %}selected{% endif %}>Done</option>
+                    </select>
+                </div>
+
+                <div class="task-updates">
+                    {% for update in task.updates.all %}
+                    <div class="update">
+                        <div class="update-time">{{ update.created_at|date:"M d, Y H:i" }}</div>
+                        <div>{{ update.text }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="add-update-form" onclick="event.stopPropagation()">
+                    <input type="text" id="update-{{ task.id }}" placeholder="Add update or comment..." />
+                    <button onclick="addUpdate({{ task.id }})">Add</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="empty-state">
+            <p>No tasks yet. Click "Add New Task" to get started!</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Add Task Modal -->
+    <div class="modal" id="addTaskModal">
+        <div class="modal-content">
+            <div class="modal-title">Create New Task</div>
+            <form id="addTaskForm">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Task Title</label>
+                    <input type="text" id="taskTitle" required autofocus>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="taskDesc"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Priority</label>
+                    <select id="taskPriority">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Due Date</label>
+                    <input type="date" id="taskDate">
+                </div>
+                <button type="submit" class="btn-primary">Create Task</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showAddTask() {
+            document.getElementById('addTaskModal').classList.add('active');
+            document.getElementById('taskTitle').focus();
+        }
+
+        document.getElementById('addTaskModal').addEventListener('click', (e) => {
+            if (e.target.id === 'addTaskModal') {
+                e.target.classList.remove('active');
+            }
+        });
+
+        document.getElementById('addTaskForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData();
+            formData.append('title', document.getElementById('taskTitle').value);
+            formData.append('description', document.getElementById('taskDesc').value);
+            formData.append('priority', document.getElementById('taskPriority').value);
+            formData.append('due_date', document.getElementById('taskDate').value);
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+            const response = await fetch('/create-task/', { method: 'POST', body: formData });
+            const data = await response.json();
+
+            if (data.success) {
+                location.reload();
+            }
+        });
+
+        function toggleTask(taskId) {
+            const details = document.getElementById('task-' + taskId);
+            details.classList.toggle('expanded');
+        }
+
+        async function updateStatus(taskId, status) {
+            const formData = new FormData();
+            formData.append('task_id', taskId);
+            formData.append('status', status);
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+            await fetch('/update-task-status/', { method: 'POST', body: formData });
+            location.reload();
+        }
+
+        async function addUpdate(taskId) {
+            const input = document.getElementById('update-' + taskId);
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            const formData = new FormData();
+            formData.append('task_id', taskId);
+            formData.append('text', text);
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+            await fetch('/add-task-update/', { method: 'POST', body: formData });
+            location.reload();
+        }
+    </script>
+</body>
+
+</html>
