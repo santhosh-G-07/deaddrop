@@ -244,7 +244,7 @@
         <div class="input-container">
             <form method="post" id="messageForm">
                 {% csrf_token %}
-                <textarea name="text" id="messageInput" placeholder="TYPE HERE" maxlength="5000"></textarea>
+                <textarea name="text" id="messageInput" placeholder="TYPE HERE" maxlength="5000" autofocus></textarea>
                 <div class="hint">ENTER TO SEND</div>
             </form>
         </div>

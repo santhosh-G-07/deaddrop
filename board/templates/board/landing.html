@@ -876,7 +876,8 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <label>Room Code (min 4 characters)</label>
-                        <input type="text" id="newRoomCode" placeholder="e.g., gf2026" minlength="4" required>
+                        <input type="password" id="newRoomCode" placeholder="e.g., gf2026" minlength="4" required
+                            autofocus>
                     </div>
                     <div class="form-group">
                         <label>Room Name</label>
@@ -900,7 +901,7 @@
                     <input type="hidden" id="selectedRoomCode">
                     <div class="form-group">
                         <label>Room Code</label>
-                        <input type="password" id="roomCodeInput" placeholder="Enter room code" required>
+                        <input type="password" id="roomCodeInput" placeholder="Enter room code" required autofocus>
                     </div>
                     <div class="error-msg" id="enterError"></div>
                     <button type="submit" class="btn-primary">Enter Room</button>
@@ -971,6 +972,10 @@
             document.getElementById('roomListView').style.display = 'none';
             document.getElementById('createRoomView').style.display = 'block';
             document.getElementById('enterRoomView').style.display = 'none';
+            // Auto-focus on room code input
+            setTimeout(() => {
+                document.getElementById('newRoomCode').focus();
+            }, 100);
         }
 
         function selectRoom(code, name) {
@@ -979,6 +984,10 @@
             document.getElementById('roomListView').style.display = 'none';
             document.getElementById('createRoomView').style.display = 'none';
             document.getElementById('enterRoomView').style.display = 'block';
+            // Auto-focus on password input
+            setTimeout(() => {
+                document.getElementById('roomCodeInput').focus();
+            }, 100);
         }
 
         document.getElementById('createRoomForm').addEventListener('submit', async (e) => {
